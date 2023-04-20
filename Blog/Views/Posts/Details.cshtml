@@ -1,0 +1,39 @@
+﻿@using System.Security.Claims;
+@model Blog.Models.Post
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container text-center f-flex justify-content-center align-items-center h-100">
+    <div class="row mt-5">
+        <h1>
+            @Html.DisplayFor(model => model.Title)
+        </h1>
+        @{
+            var email = User.FindFirstValue(ClaimTypes.Email);
+
+            if (User.Identity.IsAuthenticated && email == Model.OwnerID)
+            {
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                </div>
+            }
+
+        }
+    </div>
+    <div class="row d-flex mt-3">
+        <div class="col">
+            <div class="row d-flex flex-row">
+                <i class="fa-solid fa-user mr-2"></i>
+                <p class="mr-5">@Html.DisplayFor(model => model.Author) • @Html.DisplayFor(model => model.Created)</p>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="w-75 mt-5">
+            @Html.DisplayFor(model => model.Description)
+        </div>
+    </div>
+</div>

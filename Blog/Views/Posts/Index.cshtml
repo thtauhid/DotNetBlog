@@ -1,0 +1,26 @@
+﻿@using System.Security.Claims;
+@model IEnumerable<Blog.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Blog Posts</h1>
+@if(User.Identity.IsAuthenticated)
+{
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+}
+
+<div class="d-flex flex-wrap">
+    @foreach (var item in Model)
+    {
+        <div class="border border-2 border-black p-4 m-4 rounded" style="width:350px;">
+            <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+            <p>@Html.DisplayFor(modelItem => item.Description)...</p>
+            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Read More</a>
+        </div>
+    }
+</div>
